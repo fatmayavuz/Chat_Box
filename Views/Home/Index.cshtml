@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Box with Percentile Bar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <style>
+        
+        body {
+            background-color: #231D3B;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .chat-container { 
+            width: 100%; 
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #3C3264;
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+
+        .chat-messages { 
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow-y: auto; 
+            height:250px;
+        }
+
+        .chat-message-container {
+            display: flex;
+            flex-direction: column; /* Stack username and message vertically */
+            align-items: flex-start; /* Align items to the start (left side) */
+            margin-bottom: 10px;
+        }
+
+        .username-bubble {
+            background-color: #4832D4; 
+            border-radius: 20px 20px 0 20px; 
+            padding:12px;
+            font-size: 14px;
+            color: white;
+            margin-bottom: 5px; 
+        }
+
+        .message-bubble {
+            background-color:darkseagreen; 
+            border-radius: 0 20px 20px 20px; 
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .chat-inputs {
+            margin-top: 15px;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        .chat-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding:20px;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        #chatIcon i, #goalsIcon i {
+            font-size: 30px;
+        }
+
+        #chat-container_percent {
+            height: 300px;
+        }
+
+        .percentile-bar {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .percentile-bar, h5, label {
+            color: white;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+    <h1><span style="color:white"> CUSTOMIZABLE GRADIENT </span> <br /> 
+       <span style="color: #3C3264 "> CHAT & GOAL WIDGETS </span></h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="chat.html" class="icon-link" id="chatIcon"><i class='far fa-comment-dots'></i></a>
+
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Previous chat messages will appear here -->
+                    </div>
+                </div>
+
+                <div class="chat-inputs">
+                    <form id="chatForm">
+                        <label for="username">User Name:</label><br>
+                        <input type="text" id="username" class="chat-input" placeholder="Enter User Name" required><br>
+                        <label for="message">Message:</label><br>
+                        <textarea id="message" class="chat-input" placeholder="Type your message" required></textarea><br>
+                        <button type="submit" class="chat-btn">Send</button>
+                    </form>
+                </div>
+
+            </div>
+
+
+            <!-- Percentile bar column -->
+            <div class="col-md-6">
+               
+                <a href="goals.html" class="icon-link" id="goalsIcon"><i class="fas fa-bullseye"></i></a>
+                <div class="chat-container" id="chat-container_percent">
+
+                    <p class="center-block">
+
+                        <h5>DONATIONAL GOAL <span style=" float: right;">£10 / 100</span></h5>
+                        <div class="percentile-bar-container">
+
+                            <div class="percentile-bar" style="width: 100%; background-color: #2A2244;">
+                                <div class="percentile-bar" style="width: 13%; background-color: #4832D4;"> .</div>
+                            </div>
+
+                            <h5 style="margin-top: 20px;">FOLLOWER GOAL</h5>
+                            <div class="percentile-bar" style="width: 100%; background-color: #2A2244;"> 
+                                <span style=" float: right;">69</span>
+                                <div class="percentile-bar" style="width: 30%; background-color: #4832D4;">13</div>
+                            </div>
+
+                            <h5 style="margin-top: 20px;">BIT GOAL</h5>
+                            <div class="percentile-bar" style="width: 100%; background-color: #2A2244;">
+                                <span style=" float: right;">100</span>
+                                <div class="percentile-bar" style="width: 60%; background-color: #4832D4;">60</div>
+                            </div>
+
+                            <br />
+                            <div class="percentile-bar" style="width: 100%; background-color: #2A2244;">
+                                <span style=" float: right;">90 / 100 </span>
+                                <div class="percentile-bar" style="width: 90%; background-color: #4832D4;">SUB GOAL</div>
+                            </div>
+
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var username = document.getElementById('username').value;
+            var message = document.getElementById('message').value;
+
+            // Create a new chat message container
+            var messageContainer = document.createElement('div');
+            messageContainer.className = 'chat-message-container';
+
+            var usernameBubble = document.createElement('div');
+            usernameBubble.className = 'username-bubble';
+            usernameBubble.textContent = username;
+
+            var messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            messageBubble.textContent = message;
+
+            // Append username bubble and message bubble to the message container
+            messageContainer.appendChild(usernameBubble);
+            messageContainer.appendChild(messageBubble);
+
+            // Append the message container to the chatMessages div
+            document.getElementById('chatMessages').appendChild(messageContainer);
+
+            document.getElementById('username').value = '';
+            document.getElementById('message').value = '';
+
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        });
+    </script>
+
+</body>
+</html>
+
+
+
